@@ -34,6 +34,11 @@ require-dbt-version:  ">=1.0.0"
 # files using the `{{ config(...) }}` macro.
 models:
   dbt_demo:
-    # Config indicated by + and applies to all files under models/snowflake_raw/
-    snowflake_raw:
+    # any model that connects to the raw data must materialize as a VIEW and the one that connects to mart as tables
+    staging_raw:
+      +enabled: true
       +materialized: view
+
+    mart:
+      +enabled: true
+      +materialized: table
