@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: jaffle_shop
+    description: customer orders from the jaffle_shop schema in the raw database
+    database: raw  
+    schema: jaffle_shop  
+    tables:
+      - name: customers
+      - name: orders
+          
+  - name: stripe
+    description: payments from the stripe schema in the raw database
+    database: raw  
+    schema: stripe 
+    tables:
+      - name: payment
+
+models:
+  - name: raw__customer_orders
+    columns:
+      - name: id
+        description: primary key customer orders id
+        tests:
+          - unique
+          - not_null  
+     
+      - name: order_status
+        description: order status
+        tests:
+          - accepted_values:
+              values: ['placed', 'shipped', 'completed', 'returned','return_pending']  
+  
