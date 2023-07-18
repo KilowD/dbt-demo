@@ -1,5 +1,6 @@
-version: 2
 
+version: 2
+# declaring sources and testing them
 sources:
   - name: jaffle_shop
     description: customer orders from the jaffle_shop schema in the raw database
@@ -7,7 +8,23 @@ sources:
     schema: jaffle_shop  
     tables:
       - name: customers
+        columns: 
+          - name: id
+            tests:
+              - unique
+              - not_null
       - name: orders
+        columns: 
+          - name: id
+            tests:
+              - unique
+              - not_null
+
+          - name: status
+            tests:
+              - accepted_values:
+                  values: ['placed', 'shipped', 'completed', 'returned','return_pending'] 
+                     
         loaded_at_field: _etl_loaded_at
         freshness:
           warn_after: {count: 12, period: hour}
